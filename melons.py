@@ -1,5 +1,7 @@
 """Classes for melon orders."""
 
+import random
+
 
 
 
@@ -13,8 +15,14 @@ class AbstractMelonOrder():
         self.qty = qty
         self.country_code = country_code
 
+
+    def get_base_price(self):
+
+        self.base_price = random.randint(5, 9)
+
     def get_total(self):
-        base_price = 5
+        # base_price = 5
+        base_price = self.get_base_price()
         total = (1 + self.tax) * self.qty * base_price
 
         # check christmas melon first
@@ -28,7 +36,8 @@ class AbstractMelonOrder():
             total = ((1 + self.tax) * self.qty * base_price) + 3
             total = (round(total, 2))
 
-        return total
+        return total # get_base_price
+
 
     def mark_shipped(self):
         """Record the fact than an order has been shipped."""
@@ -51,7 +60,7 @@ class InternationalMelonOrder(AbstractMelonOrder):
 
     order_type = "international"
     tax = 0.17
-    country_code = None
+    country_code = ''
 
 class GovernmentMelonOrder(AbstractMelonOrder):
 
